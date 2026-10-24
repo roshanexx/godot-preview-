@@ -1,5 +1,5 @@
 name: Publish Godot Web Preview
-# Rebuild after private Godot mini-game update
+# Rebuild after mobile scaling fix
 
 on:
   workflow_dispatch:
