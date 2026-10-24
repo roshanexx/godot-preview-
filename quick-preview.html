@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#dff4ff"><title>Penguin • Quick Preview</title><style>
+*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden;font-family:system-ui,sans-serif;background:linear-gradient(#cdeeff,#f6fbff);color:#183247}main{height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:16px}canvas{width:min(100%,460px);height:min(70dvh,650px);touch-action:manipulation}header{font-size:17px;font-weight:750}p{margin:0;font-size:13px;opacity:.75}button{background:#173e62;color:white;border:0;border-radius:16px;padding:12px 25px;font-size:15px}footer{font-size:12px;opacity:.6}</style></head><body><main><header>🐧 پیش‌نمایش سریع پنگوئن</header><p>انیمیشن برداری، بدون موتور Godot و بدون اسپریت‌شیت</p><canvas id="stage" width="420" height="650" aria-label="Walking penguin"></canvas><button id="toggle">توقف حرکت</button><footer id="fps">سبک و مستقل از نرخ تازه‌سازی نمایشگر</footer></main><script>
+const canvas=document.getElementById('stage'),ctx=canvas.getContext('2d'),button=document.getElementById('toggle');let walking=true,phase=0,last=0,frames=0,lastFps=0;
+function ellipse(x,y,rx,ry,color){ctx.beginPath();ctx.ellipse(x,y,rx,ry,0,0,Math.PI*2);ctx.fillStyle=color;ctx.fill()}
+function circle(x,y,r,color){ellipse(x,y,r,r,color)}
+function draw(t){const dt=last?Math.min((t-last)/1000,.05):0;last=t;if(walking)phase+=dt*8;ctx.clearRect(0,0,420,650);ctx.save();ctx.translate(210,295);
+ellipse(0,185,130,34,'#d5e9f0');const bob=walking?Math.sin(phase*2)*5:0;
+for(const side of [-1,1]){const step=walking?Math.sin(phase+(side>0?Math.PI:0))*18:0;ellipse(side*44+step,118,37,19,'#ffb54a')}
+ellipse(0,bob,98,139,'#263a52');
+for(const side of [-1,1]){const swing=walking?Math.sin(phase+(side>0?Math.PI:0))*18:0;ellipse(side*94,13+bob+swing,26,79,'#263a52')}
+ellipse(0,30+bob,70,94,'#fffaf0');circle(0,-103+bob,85,'#263a52');
+ellipse(-30,-112+bob,20,26,'white');ellipse(30,-112+bob,20,26,'white');circle(-25,-108+bob,8,'#1b2734');circle(25,-108+bob,8,'#1b2734');
+ctx.fillStyle='#ffb54a';ctx.beginPath();ctx.moveTo(-23,-75+bob);ctx.lineTo(23,-75+bob);ctx.lineTo(0,-52+bob);ctx.fill();ctx.restore();
+frames++;if(t-lastFps>1000){document.getElementById('fps').textContent='نرخ نمایش تقریبی: '+Math.round(frames*1000/(t-lastFps))+' FPS';lastFps=t;frames=0}requestAnimationFrame(draw)}
+function toggle(){walking=!walking;button.textContent=walking?'توقف حرکت':'ادامه حرکت'}button.onclick=toggle;canvas.onclick=toggle;requestAnimationFrame(draw);
+</script></body></html>
