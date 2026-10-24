@@ -20,6 +20,10 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - name: Checkout public preview assets
+        uses: actions/checkout@v4
+        with:
+          path: preview
       - name: Check source token
         shell: bash
         env:
@@ -57,6 +61,11 @@ jobs:
           ./Godot_v4.6-stable_linux.x86_64 --headless --path source --export-release Web "$GITHUB_WORKSPACE/dist/index.html"
           test -s dist/index.html
           touch dist/.nojekyll
+      - name: Include lightweight HTML5 preview
+        shell: bash
+        run: |
+          mkdir -p dist/quick
+          cp preview/quick-preview.html dist/quick/index.html
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload web files only
