@@ -1,4 +1,5 @@
 name: Publish Godot Web Preview
+# Rebuild after private Godot mini-game update
 
 on:
   workflow_dispatch:
