@@ -1,5 +1,5 @@
 name: Publish Godot Web Preview
-# Rebuild after mobile scaling fix
+# Rebuild after absolute-coordinate positioning fix
 
 on:
   workflow_dispatch:
