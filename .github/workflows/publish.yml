@@ -1,5 +1,5 @@
 name: Publish Godot Web Preview
-# Rebuild after absolute-coordinate positioning fix
+# Rebuild fixed logical viewport V4
 
 on:
   workflow_dispatch:
